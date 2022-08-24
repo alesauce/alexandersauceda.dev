@@ -1,0 +1,25 @@
+languageCode = "en"
+languageName = "English"
+displayName = "EN"
+isoCode = "en"
+weight = 1
+rtl = false
+
+title = "21st Century Resume"
+# logo = "img/logo.jpg"
+description = "My project portfolio and blog"
+# copyright = "Copy, _right?_ :thinking_face:"
+
+dateFormat = "2 January 2006"
+
+[author]
+  name = "Alexander Sauceda"
+  image = "img/author.jpg"
+  headline = "Aspiring Site Reliability Engineer, Lifelong Student"
+  links = [
+    { email = "mailto:alexander@buildersandbox.com" }, #TODO: set up email to alexandersauceda.dev domain
+    { github = "https://github.com/crow-magnon" },
+    { linkedin = "https://www.linkedin.com/in/alexander-matthew-sauceda/" },
+    { "sourcehut" = "https://sr.ht/~crow-magnon/" },
+    { stack-overflow = "https://stackoverflow.com/users/19834001/crow-magnon" },
+  ]
