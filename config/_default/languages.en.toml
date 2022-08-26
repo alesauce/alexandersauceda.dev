@@ -5,9 +5,9 @@ isoCode = "en"
 weight = 1
 rtl = false
 
-title = "21st Century Resume"
+title = "Library of Alexander(ia)"
 # logo = "img/logo.jpg"
-description = "My project portfolio and blog"
+description = "Project portfolio and blog"
 # copyright = "Copy, _right?_ :thinking_face:"
 
 dateFormat = "2 January 2006"
@@ -15,9 +15,9 @@ dateFormat = "2 January 2006"
 [author]
   name = "Alexander Sauceda"
   image = "img/author.jpg"
-  headline = "Aspiring Site Reliability Engineer, Lifelong Student"
+  headline = "Self-taught engineer wtih too many hobbies to count."
   links = [
-    { email = "mailto:alexander@buildersandbox.com" }, #TODO: set up email to alexandersauceda.dev domain
+    { email = "mailto:alexander@buildersandbox.com" },
     { github = "https://github.com/crow-magnon" },
     { linkedin = "https://www.linkedin.com/in/alexander-matthew-sauceda/" },
     { "sourcehut" = "https://sr.ht/~crow-magnon/" },
