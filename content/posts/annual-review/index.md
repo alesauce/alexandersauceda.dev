@@ -95,6 +95,6 @@ When I started thinking about one word to distill my goals and desires into, I k
 - Work/Life: Review cycles, self-enforced deadlines for projects, celebrating wins and not just mourning losses, date nights with wifey
 
 One more quote from Peter that stuck with me:
-*Striving for better requires constant reflection and effort.*
+>Striving for better requires constant reflection and effort.
 
 Big dreams are all well and good, but they are only dreams if there is no effort behind them. I want to be that person that dreams big and achieves their dreams. I want to be someone who builds, who learns, who charts their own path and follows it. I want to be consistent in my efforts to be better every day.
