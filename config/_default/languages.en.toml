@@ -5,7 +5,7 @@ isoCode = "en"
 weight = 1
 rtl = false
 
-title = "Library of Alexander(ia)"
+title = "Library of Alexandria"
 # logo = "img/logo.jpg"
 description = "Project portfolio and blog"
 # copyright = "Copy, _right?_ :thinking_face:"
@@ -15,7 +15,7 @@ dateFormat = "2 January 2006"
 [author]
   name = "Alexander Sauceda"
   image = "img/author.jpg"
-  headline = "Self-taught engineer wtih too many hobbies to count."
+  headline = "Hobbyist with an affinity for rabbit holes."
   links = [
     { email = "mailto:alexander@buildersandbox.com" },
     { github = "https://github.com/crow-magnon" },

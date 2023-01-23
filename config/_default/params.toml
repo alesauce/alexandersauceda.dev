@@ -26,11 +26,11 @@ enableCodeCopy = false
 
 [homepage]
   layout = "profile" # valid options: page, profile, custom
-  showRecent = false
+  showRecent = true
 
 [article]
   showDate = true
-  showDateUpdated = false
+  showDateUpdated = true 
   showAuthor = true
   showBreadcrumbs = false
   showDraftLabel = true
@@ -41,11 +41,11 @@ enableCodeCopy = false
   showPagination = true
   invertPagination = false
   showReadingTime = true
-  showTableOfContents = false
+  showTableOfContents = true 
   showTaxonomies = false
   showWordCount = false
   showComments = false
-  # sharingLinks = ["facebook", "twitter", "pinterest", "reddit", "linkedin", "email"]
+  sharingLinks = ["facebook", "twitter", "pinterest", "reddit", "linkedin", "email"]
 
 [list]
   showBreadcrumbs = false

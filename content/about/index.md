@@ -1,7 +1,7 @@
 ---
 title: "About Me"
 date: 2022-08-24T19:46:40-07:00
-draft: false 
+draft: true
 ---
 
 # :wave: Howdy, howdy!
@@ -16,3 +16,10 @@ Outside of the engineering world, I am passionate about the worlds of Personal K
 When I do decide to have fun, I love to get outside and go bouldering or hiking, particularly to any sort of water feature. Alternatively, I love to cook and play bartender and experiment with different food and cocktail pairings. Finally, I love to read fantasy novels. A friend got me hooked on Brandon Sanderson, and one massive Kickstarter later, I'm officially buckled in and committed for life.
 
 If any of these topics interest you, feel free to check out my blog and reach out any time! I hope you enjoy the content.
+
+
+note about trying to learn stuff and what stuff I'm trying to learn
+future plans
+made this website also as a creative outlet
+add some pictures
+add some notes about other personal interests (traveling, etc.)
