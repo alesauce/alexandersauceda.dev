@@ -17,9 +17,8 @@ dateFormat = "2 January 2006"
   image = "img/author.jpg"
   headline = "Hobbyist with an affinity for rabbit holes."
   links = [
-    { email = "mailto:alexander@buildersandbox.com" },
-    { github = "https://github.com/crow-magnon" },
+    { email = "mailto:alexander@alexandersauceda.dev" },
+    { github = "https://github.com/alesauce" },
     { linkedin = "https://www.linkedin.com/in/alexander-matthew-sauceda/" },
-    { "sourcehut" = "https://sr.ht/~crow-magnon/" },
-    { stack-overflow = "https://stackoverflow.com/users/19834001/crow-magnon" },
+    { stack-overflow = "https://stackoverflow.com/users/19834001/alesauce" },
   ]
