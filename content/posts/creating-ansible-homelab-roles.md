@@ -10,13 +10,21 @@ tags:
 - engineering
 - raspberry-pi
 ---
-# Tentative Plan
-I want to use #tools/ansible to:
-1. migrate OS on the Raspberry Pi units to an SSD from the SD card
-2. Set up `alesauce` user on all Pis and ensure Ubuntu/crow-magnon users are deleted
-3. provision a #raspberry-pi  unit with a headscale control server.
-4. Provision multiple Pis with tailscale clients
-5. Test configuration and DNS
+# About That Tagline
+I love being able to put down new things on my resume. It always feels like such an accomplishment, even if my resume has *occasionally*, *slightly* overstated some of my accomplishments or left my skill level... open to interpretation. I've had a few occasions recently to reflect on my current skillset vs. where I want to be - thank you, job interviews. However, this website has also been a sobering reminder of the gap between where I am and where my goals lie. Originally, the purpose of this website was to give myself an avenue where I can show off my curiosity and my ability to learn. Due to time constraints and any other number of excuses though, it still sits mostly barren. Something that is extra galling to me is the juxtaposition of the tag line on the front page and the content available - I explicitly mention diving into new things and writing through those experiences. In contrast, the two articles present are more related to some slightly more abstract concepts like goals setting and mindsets.
+
+As I wrote about previously *insert article link here*, it's better to release something that is "good enough" rather than hold out for something "perfect" and end up with no output at all. In this case, as much as I would love to write the definitive resource to going from Ansible Zero to Ansible Hero, I will instead show my transition from Ansible Zero to Ansible Zero Point 1.
+
+# An Idiot's Journey into Ansible
+My therapist probably won't like the way I'm talking about myself, but the good news is that she won't read it. Don't be a snitch!
+
+Now that the formalities are out of the way, I should probably give a little bit of context on what I am attempting to do so people can see if this will actually help them or not. The actual tasks I completed were very different from my original project plan, but the overview of what I did:
+1. Create a new Ansible role for provisioning my homelab hardware
+2. Test out that Ansible role using Ansible Molecule *insert link here*
+3. Push that new Ansible role to GitHub and Ansible Galaxy profiles
+
+Sounds simple enough, right? However, you should also know that my original plan was much deeper. Namely:
+*insert old plan here and decide if I want to keep it or not
 
 # OS Migration
 - If I want to make an Ansible role to handle this, I think I will need to start with creating an Ansible dev shell via Nix in my projects directory. Given that, think I'll start with creating a Git repo and a new repo on GitHub so I can have a backup/version control of my work.
