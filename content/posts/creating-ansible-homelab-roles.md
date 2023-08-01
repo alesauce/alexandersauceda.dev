@@ -1,7 +1,7 @@
 ---
-title: "Creating Ansible Homelab Roles"
+title: "An Idiot's Journey into Automation with Ansible"
 date: 2023-04-24T20:39:05-06:00
-draft: true
+draft: false
 tags:
 - ansible
 - homelab
@@ -9,111 +9,101 @@ tags:
 - devops
 - engineering
 - raspberry-pi
+- nix
+- automation
 ---
-# About That Tagline
-I love being able to put down new things on my resume. It always feels like such an accomplishment, even if my resume has *occasionally*, *slightly* overstated some of my accomplishments or left my skill level... open to interpretation. I've had a few occasions recently to reflect on my current skillset vs. where I want to be - thank you, job interviews. However, this website has also been a sobering reminder of the gap between where I am and where my goals lie. Originally, the purpose of this website was to give myself an avenue where I can show off my curiosity and my ability to learn. Due to time constraints and any other number of excuses though, it still sits mostly barren. Something that is extra galling to me is the juxtaposition of the tag line on the front page and the content available - I explicitly mention diving into new things and writing through those experiences. In contrast, the two articles present are more related to some slightly more abstract concepts like goals setting and mindsets.
 
-As I wrote about previously *insert article link here*, it's better to release something that is "good enough" rather than hold out for something "perfect" and end up with no output at all. In this case, as much as I would love to write the definitive resource to going from Ansible Zero to Ansible Hero, I will instead show my transition from Ansible Zero to Ansible Zero Point 1.
+# The "Joys" of Learning
+I love the feeling of adding new skills and data points to my resume. For me, that feels like the exclamation point on top of whatever I was trying to accomplish. On the flip side, my resume has **occasionally**, **slightly** overstated some of my accomplishments or left my skill level... open to interpretation. Recently, I've had a few occasions to reflect on my current skillset versus where I want to be. Creating this website has also been a sobering reminder of the gap between where I am and where my goals lie.
 
-# An Idiot's Journey into Ansible
+Originally, the purpose of this website was to give myself an avenue where I can show off my curiosity and my ability to learn. Due to time constraints and any other number of excuses though, it still sits mostly barren. Something that is extra galling to me is the juxtaposition of the tag line on the front page and the content available - I explicitly mention diving into new things and writing through those experiences. In contrast, the two articles present are more related to some slightly more abstract concepts like goals setting and mindsets.
+
+As I wrote about [previously](https://alexandersauceda.dev/posts/perfect-as-enemy/), it's better to release something that is "good enough" rather than hold out for something "perfect" and end up with no output at all. Admittedly, I would love to write *The Definitive Resource on Going from "Ansible Zero" to "Ansible Hero"*. However, I am unsure who would consider me an "Ansible Hero" outside of someone who either:
+A) is inebriated beyond the point of coherency, or
+B) hasn't seen or interacted with a computer since 1975.
+
+Given my current reality, I will have to be be realistic and instead write:
+
+# An Idiot's Journey into Automation with Ansible
 My therapist probably won't like the way I'm talking about myself, but the good news is that she won't read it. Don't be a snitch!
 
-Now that the formalities are out of the way, I should probably give a little bit of context on what I am attempting to do so people can see if this will actually help them or not. The actual tasks I completed were very different from my original project plan, but the overview of what I did:
-1. Create a new Ansible role for provisioning my homelab hardware
-2. Test out that Ansible role using Ansible Molecule *insert link here*
-3. Push that new Ansible role to GitHub and Ansible Galaxy profiles
+<figure>
+    <iframe src="https://giphy.com/embed/OAdoioNIb3lyPEgcBY" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/parksandrec-parks-and-recreation-rec-OAdoioNIb3lyPEgcBY">via GIPHY</a></p>
+    <figcaption>Don't forget!</caption>
+</figure>
 
-Sounds simple enough, right? However, you should also know that my original plan was much deeper. Namely:
-*insert old plan here and decide if I want to keep it or not
+Now that the standard "Internet recipe with a three-page backstory" formalities are out of the way, I should probably give a little bit of context on what I am attempting to do so readers can decide if this post will actually help them or not. This was my first time attempting to create an Ansible "role" *link to ansible role documentation here*, or a set of tasks that could be used in other playbooks. I already had a playbook that completed most of this task from a job interview, so this was mostly about migrating it to a role that could be used by others. The tasks I wanted my role to perform were:
+1. Set up a new user so the default user on the machine could be deleted
+2. Install SSHD and upload a lightly opinionated config file
+3. Change the hostname on the machine
+4. Validate said config file
+5. Install a Tailscale client *link to Tailscale page* and start the Tailscale service
+6. Install Prometheus node exporter to retrieve metrics
 
-# OS Migration
-- If I want to make an Ansible role to handle this, I think I will need to start with creating an Ansible dev shell via Nix in my projects directory. Given that, think I'll start with creating a Git repo and a new repo on GitHub so I can have a backup/version control of my work.
-- Down a bit of a rabbit hole about Nix development environments (of course), but I think I will use the `direnv` -> `venv` -> `pip install --user` method for now of getting Ansible and using all of those tools.
-- I'm not able to run `docker` without `sudo`, but let's see if that will actually affect me.
-- Planning to use [[Ansible Molecule]] to test out the new roles as well.
-- The Tom's Hardware article (linked below) was more focused on a brand new installation of an OS on a Raspberry Pi. Found [this article](https://www.zdnet.com/article/booting-my-raspberry-pi-4-from-a-usb-device/) instead in search of an article that helps change the bootloader on a current install.
-- Trying to find the version of bootloader I have using the command `vcgencmd bootloader_version` and got the error `VCHI initialization failed` - looking into that now. Found [this article](https://chewett.co.uk/blog/258/vchi-initialization-failed-raspberry-pi-fixed/) that says the issue is that my user is not part of the `video` group on the host. Use the command `sudo usermod -aG video crow-magnon` to fix this issue.
-	- Don't forget to log out and log back in so you can re-source your permissions.
-	- That fixed it!
-- The articles I can find right now are all focused on Raspberry Pi OS instead of OS-agnostic.
-- Found [this article](https://medium.com/xster-tech/move-your-existing-raspberry-pi-4-ubuntu-install-from-sd-card-to-usb-ssd-52e99723f07b) that almost specifically handles my issue. Really nice tbh. Going to read through that.
-- I've decided to start from a fresh install of Ubuntu OS because I halfway borked `mariposa1` to be honest.
-- Flashing Ubuntu 22.04 LTS directly to my SSD and modifying the bootloader from the rpi command line directly. Using the utility `rpi-eeprom-config` to modify the Pi to use usb boot first.
-- Ran command `sudo -E rpi-eeprom-config --edit` which will open the config file in your environment's text editor.
-	- Documentation used for these steps:
-		- [Bootloader docs](https://www.raspberrypi.com/documentation//computers/raspberry-pi.html#raspberry-pi-4-bootloader-configuration)
-		- [config.txt format](https://www.raspberrypi.com/documentation//computers/config_txt.html)
-		- [Imager docs](https://www.raspberrypi.com/documentation//computers/raspberry-pi.html#imager)
-		- [Options to update the bootloader](https://www.raspberrypi.com/documentation//computers/raspberry-pi.html#raspi-config)
-		- Initially took a link at [this post](https://mutschler.eu/linux/install-guides/raspi-btrfs/) about migrating the boot to a USB but have not used it yet.
-- Able to get Ubuntu server 22.04.2 LTS working by using the following commands. Note that this method only worked because I had a working installation that I used to modify the bootloader from, then switched over to new booter.
-	```shell
-	sudo -E rpi-eeprom-config --edit
-	# Added the following line to the config file
-	BOOT_ORDER=0xf14
-	# based on this table: https://www.raspberrypi.com/documentation//computers/raspberry-pi.html#BOOT_ORDER
-	# sets the bootloader to the following order:
-	# USB
-	# SD card
-	# restart if neither is found
-	sudo reboot
-	```
+Finally, I wanted to test out new Ansible role using [Ansible Molecule](https://ansible.readthedocs.io/projects/molecule/) and push that new Ansible role to my GitHub and Ansible Galaxy profiles. Feel free to check out the repo for the Ansible role created in this article [here!](https://github.com/alesauce/provision-new-stock-linux-server) You can view the commit history to see some of the diffs where I figured out solutions to some of the problems I ran into. Also link to Ansible Galaxy here.
 
-## References
-- Using [this guide from Tom's Hardware](https://www.tomshardware.com/how-to/boot-raspberry-pi-4-usb), [this StackExchange answer](https://raspberrypi.stackexchange.com/questions/127757/how-to-clone-os-from-sd-to-ssd-using-command-line), and the [GitHub repo for rpi-clone](https://github.com/billw2/rpi-clone) as my starting point to migrate the boot drive to the SSD
+# Building the Supporting Cast
+<figure>
+    <iframe src="https://giphy.com/embed/l0Iy70zlRjH5ev3qw" width="480" height="199" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/filmstruck-kevin-spacey-benicio-del-toro-l0Iy70zlRjH5ev3qw">via GIPHY</a></p>
+    <figcaption>Maybe not quite this level of a supporting cast...</caption>
+</figure>
+Before I could get too into the weeds, I needed to ensure that I had the tools to build and test this role. Specifically, I needed:
+- an installation of Docker that did not require `sudo` to use,
+- an installation of Ansible and Ansible Molecule to test the role,
+- Molecule configured to use the Docker driver, and
+- verification that all of the above worked correctly.
 
+First, I followed the [guide to configure Docker for non-sudo access](https://docs.docker.com/engine/install/linux-postinstall/). When someone has already documented exact steps for you to follow, turns out pretty much anything is easy to accomplish!
 
-# Re-install Docker
-- Unfortunately, I've changed my GitHub username since the last time I used Tailscale, so I will have to wait until support gets back to me so I can fix my Tailnet.
-- I have completed up until the actual start of the `headscale serve` command in the initial installation and configuration section in the [repo](https://github.com/juanfont/headscale/blob/main/docs/running-headscale-linux.md). Once I have my tailnet renamed, I will test it from a few clients. then I will start working on creating the create new user roles for Ansible so I can provision all of my raspberry pis when they come online.
-- I'm uninstalling my docker install on my desktop because it didn't work properly and I want to start from scratch.
-- Tailscale also got back to me really quickly and my tailnet is back in operation - after some consideration, I've decided to not proceed with headscale for now, but will keep this task alive as the basis of "provision all nodes" so I can create an Ansible playbook to create the new `alesauce` user on my nodes along with passwordless sudo access
-- I have now created an ansible dev environment (again) and completely removed Docker from my machine. Going to now work on getting Docker and molecule set up properly.
-- Following the [Docker Engine installation instructions](https://docs.docker.com/engine/install/linux-postinstall/)
-- This time the docker rootless instruction worked. Back to Ansible I go!
+Next, I started working on the [Ansible Molecule Getting Started guide](https://ansible.readthedocs.io/projects/molecule/getting-started/). I will neither confirm nor deny that I was a tad intoxicated when I started working on this part. Don't judge me - it was a Friday night after a long work week. Because of my... shall we say, less-than-optimal brainpower available, I had to create, then delete, then re-create a new Ansible role directory a couple of times until I remembered to use the `--driver-name docker` flag for the `molecule init role`. Was there probably a way to fix it after creating the role? Most definitely. But my thought process was it would be easier to just delete and re-create. If your mouth is hanging open in slack-jawed amazement at the level of my idiocy, just remember that I warned you in the title.
 
-## References
-- Using [this article](https://peterteszary.hashnode.dev/how-to-install-docker-on-pop-os) to re-install Docker for use with Molecule. It was basically a copy of the Docker Engine installation, lol
+<figure>
+    <iframe src="https://giphy.com/embed/xT5LMLJapSVPvCUEGQ" width="480" height="362" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/season-15-the-simpsons-15x8-xT5LMLJapSVPvCUEGQ">via GIPHY</a></p>
+    <figcaption>I don't appreciate you attacking me like this Giphy, but well played nonetheless.</caption>
+</figure>
 
-# Molecule Setup and Configuration
-- I don't have any clue how to use Molecule, so I just re-created the role directory a few times until I remembered to use the `--driver-name docker` part of the command after `molecule init role`
-- Following the guide in the [Molecule getting started](https://molecule.readthedocs.io/en/latest/getting-started/#inspecting-the-moleculeyml) guide to do some basic work with Molecule.
-- My NVIM setup is giving me some weird errors and trouble on my desktop now. Really need to start instituting my "one dotfile task a day" thing - maybe add that in to weekly planning
-- First issue with Ansible - getting an error trying to run ansible because of an interpreter issue. See error below:
-```
+Anyway, once I got the role set up, I wanted to test that it worked properly with the basic scaffold that a new Molecule project starts with before I started throwing my own nonsense in there. I started running the commands from the [Run test sequence commands](https://ansible.readthedocs.io/projects/molecule/getting-started/#run-test-sequence-commands) section of the guide. Since I had followed the guide religiously up to this point, obviously the commands all worked the first time and I was on easy street right? WRONG. I was able to create a container with `$ molecule create` and see said container with `$ molecule list`, but when I tried to run `$ molecule converge`, I promptly received the below error:
+
+```shell
 fatal: [ubuntu_instance]: FAILED! => {"ansible_facts": {}, "changed": false, "failed_modules": {"ansible.legacy.setup": {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"}, "failed": true, "module_stderr": "/bin/sh: 1: /usr/bin/python: not found\n", "module_stdout": "", "msg": "The module failed to execute correctly, you probably need to set the interpreter.\nSee stdout/stderr for the exact error", "rc": 127}}, "msg": "The following modules failed to execute: ansible.legacy.setup\n"}
 ```
-- Found [this doc](https://docs.ansible.com/ansible/latest/reference_appendices/interpreter_discovery.html) on Ansible Interpreter Discovery and going to go through that to see if I can set the interpreter in config.
-- [This is the most useful guide I've found so far](https://maciej.lasyk.info/2016/Jun/27/working-with-virtualenv-and-ansible/) to figure out why Ansible isn't working in my virtualenv. Tl;Dr is it doesn't read the config files apparently, and the variable has to be set in the inventory file to be read by Ansible. But I can't figure out how to do this in Molecule.
-- After all of these issues, I found [this GitHub issue](https://github.com/ansible-community/molecule-docker/issues/151) where someone experienced the exact same issue. Tl;Dr: The error finding Python interpreter was on the remote host (e.g. container), not my local host. No more of that error!
-- I get a new error now (below) but it at least it's a different one!
-```
+
+And, well...
+
+## The Head-Banging Begins
+While looking up this error message, I found [a few](https://docs.ansible.com/ansible/latest/reference_appendices/interpreter_discovery.html) [different articles](https://maciej.lasyk.info/2016/Jun/27/working-with-virtualenv-and-ansible/) that discussed setting the environment variable on the host running Ansible, and I tried different solutions for a few hours before I called it quits for the night. When I picked up the issue again the next day with a, ahem, clearer mind, I found [this GitHub issue](https://github.com/ansible-community/molecule-docker/issues/151) that helped me find the true root cause of the problem. Tl;Dr: The interpreter issue isn't with the local host running Ansible, but is instead on the remote host that I was trying to run Ansible on (in this case, a Docker container.) After using `molecule login` and installing Python on the container, I no longer got this error. To avoid this issue happening every time I booted up a new test, I then changed the base image the test was using to the Python official [python:3.11.3-bullseye](https://hub.docker.com/layers/library/python/3.11.3-bullseye/images/sha256-cbaa654007e0c2f2e2869ae69f9e9924826872d405c02647f65f5a72b597e853?context=explore) image.
+ 
+During these trials, I also spent about 15 minutes staring at the wall and formulating plans to uninstall Ansible, install a fresh copy of Pop! OS, and pick a new configuration management tool. I also spent another 5 minutes comparing Chef, SaltStack, and Puppet to determine my new choice, all while repeating "Ansible is dumb. It's the tool's fault, not mine. I'm gonna use a REAL config manager tool now and it'll solve these problems." Seriously - I wish I was kidding. Thankfully, cooler heads prevailed and I decided to figure out the issue.
+
+<figure>
+    <iframe src="https://giphy.com/embed/lQCV6K36nJfJYNxXbC" width="480" height="405" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/maid-regret-hit-the-wall-lQCV6K36nJfJYNxXbC">via GIPHY</a></p>
+    <figcaption>My forehead callus is pretty tough these days...</caption>
+</figure>
+
+After I installed Python on the Molecule-created container, I (of course) received a new error!
+
+```shell
 fatal: [debian]: UNREACHABLE! => {"changed": false, "msg": "Failed to create temporary directory. In some cases, you may have been able to authenticate and did not have permissions on the target directory. Consider changing the remote tmp path in ansible.cfg to a path rooted in \"/tmp\", for more error information use -vvv. Failed command was: ( umask 77 && mkdir -p \"` echo ~/.ansible/tmp `\"&& mkdir \"` echo ~/.ansible/tmp/ansible-tmp-1681796130.0149798-31391-117799164586022 `\" && echo ansible-tmp-1681796130.0149798-31391-117799164586022=\"` echo ~/.ansible/tmp/ansible-tmp-1681796130.0149798-31391-117799164586022 `\" ), exited with result 1", "unreachable": true}
 ```
-- I think the above ^^ issue was because I forgot to `molecule reset` and `molecule create` a new target container with the create name and everything, so it had issues. After doing reset and create, the sample task works!
-- I definitely almost uninstalled Ansible, reinstalled Pop!OS, and picked a new config management tool during this troubleshooting session. I wish I was kidding.
-	- "Ansible is dumb. It's the tool's fault, not mine. I'm gonna use a REAL config manager tool now and it'll solve these problems."
-- After pulling all those together, I do feel better now having accomplished something
-- Next steps, migrate the expensify playbook instructions over to the new molecule role directory
-- I want to get tailscale installed on all of my servers by tomorrow night preferably. Nice thing is only needing to get it right once, then it will be a lot easier(hopefully)
-- **Note:** After coming back the next day, don't forget to `molecule reset` when logging off for the day/and or starting a new test. That way it will delete the old instance and start a new one for testing.
 
-# Converting User Config Playbook to Role
-- Found [this Quora answer](https://www.quora.com/How-do-I-switch-the-user-executing-tasks-in-Ansible-roles) for changing the user executing an Ansible playbook. Might be able to use that to log into the new user in the new create/configure role and delete the default ubuntu.
-	- Question - do I want to delete the default `ubuntu` user from this playbook though? seems like I could just leave that from the role and allow the user of the role to clean up the default info at the end. Also leaves the playbook able to be used cross-distro.
-- After looking at a lot of other Ansible roles for inspiration, back to working on this one, lol.
-- Got some initial stuff down. Also had some initial dumb failures:
-	- Forgetting that when templating values in an Ansible playbook (e.g. `{{ new_user_name }}`), if the template is the first value on the line it needs to be quoted
-	- Not realizing that I had the first line of `tasks/main.yml` as `tasks:`, which isn't needed in a role's tasks file because it's supposed to be a list of tasks.
-	- Also forgot that for Ansible's iteration (e.g. `with_items:`), need to use `item` in the task line or it's gonna think it's an undefined variable)
-- After installing sshd and trying to validate new sshd file, I got the following error: `"Missing privilege separation directory: /run/sshd\r\n"`. I have never seen this error before, so should be interesting.
-	- Found [this GitHub issue](https://github.com/ansible/ansible-container/issues/141). Looks like the issue is when you start an SSH server from outside of Debian/Ubuntu's usual init method.
-	- Running `mkdir -p /var/run/sshd` solved this one
-- Next was this error message from attempting to restart SSHD: `"System has not been booted with systemd as init system (PID 1). Can't operate.\nFailed to connect to bus: Host is down"`.
-	- Based on some searching, seems the issue is that Docker containers do not come with SystemD because of compatibility issues.
-	- Found [this StackOverflow answer](https://stackoverflow.com/questions/53383431/how-to-enable-systemd-on-dockerfile-with-ubuntu18-04) that suggests using a script in the container to essentially replicate `systemctl` functionality for Ansible's purposes
-	- [GitHub repo](https://github.com/gdraheim/docker-systemctl-replacement) for the script mentioned above.
-	- have so far been working on this by adding the Python script with the below commands.
+This one was a bit simpler - because I had changed the base image for the test, Molecule was expecting a different image when I started the test. After running `molecule reset` and `molecule create`, I stopped receiving this error and the standard Molecule scaffold test worked!
+
+## Starting to Build Some Confidence
+Once I was able to run the Molecule test command, I started to move my existing playbook into the Molecule `tasks/main.yml` file. Initially, I made some dumb mistakes like forgetting to quote template variables in the YAML file. Example:
+
+```yaml
+# Bad version
+example_task: {new_user_name}
+
+# Good version
+example_task: '{new_user_name}'
+```
+I'm not the biggest fan of all of Ansible's error messages, but for the dumb-dumb mistakes like these, they were super helpful. Note that this errors out only if the template variable is the first value for a given key.
+
+Correcting dumb syntax errors took me a few minutes, then the actual tasks could start running on the Molecule testing image. The first issue I ran into here was an error after installing `sshd` and trying to validate the `sshd_config` file: `"Missing privilege separation directory: /run/sshd\r\n"`. Searching for a solution lead me to [this GitHub issue](https://github.com/ansible/ansible-container/issues/141), which directed me to create a new directory at `/var/run/sshd` to allow OpenSSH to create and validate the new config correctly.
+
+However, SSH configuration wasn't done throwing curveballs at me. My next attempt lead to a new error: `"System has not been booted with systemd as init system (PID 1). Can't operate.\nFailed to connect to bus: Host is down"`. More searching and Stack Overflow browsing ensued, which lead me to realize that Docker containers do not come with SystemD because of compatibility issues with the virtualization. Thankfully, the wonderful wide world of the Internet meant that someone smarter than me had already encountered this issue and solved it. I found [this StackOverflow answer](https://stackoverflow.com/questions/53383431/how-to-enable-systemd-on-dockerfile-with-ubuntu18-04) that suggested using the Python script in [this GitHub repo](https://github.com/gdraheim/docker-systemctl-replacement) to emulate `systemctl` functionality for Ansible's benefit. I added this script to my running container with the below commands:
+
 ```shell
 # pull the script to the local machine
 curl https://github.com/gdraheim/docker-systemctl-replacement/blob/master/files/docker/systemctl3.py > /usr/bin/systemctl
@@ -122,77 +112,34 @@ test -L /bin/systemctl || ln -sf /usr/bin/systemctl /bin/systemctl
 # make the script executable
 chmod +x /usr/bin/systemctl
 ```
-- And the role completely worked!!! Just need to do those extra config steps and I can upload this bad boy to GitHub/Ansible Galaxy
-- Seems like the best way might just be to create a separate Dockerfile and upload it to DockerHub to test from there.
-- I ran into the same directory error above (pretty misleading, tbh). This time the issue was because I had changed the command in the `molecule/defaults/molecule.yml` file and the container exited since the command was blank. I removed that and et voila, we're in business!
-- Role is tested and works great on the new docker image! Going to push it to GitHub, then create a quick Ansible playbook using these roles to set up my whole cluster!
-- Forgot one thing - also wanna change the hostname on each server when booting it up. Worth adding on real quick to the role.
 
+After these changes to the running Molecule container, the new role to configure a new Linux server worked like a charm 💯💯.
 
-## Changes Needed for Container Config for Role
-I don't know how yet, but need to do some config to the created instance after creation. I can see an option for a configuration playbook when running `molecule create`.
-- [x] Install openssh-server
-- [x] Install sudo
-- [x] Create the needed ssh directory with: `mkdir -p /var/run/sshd` 
-- [x] Either of two options:
-	- [ ] ~~Use an Ubuntu image with systemd enabled like [this example on DockerHub](https://hub.docker.com/r/jrei/systemd-ubuntu)~~
-	- [x] Use [this Python script](https://github.com/gdraheim/docker-systemctl-replacement/blob/master/files/docker/systemctl3.py) that will emulate systemd functionality
+<figure>
+    <iframe src="https://giphy.com/embed/xULW8JVo4V7x9aqae4" width="462" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/crazy-ex-girlfriend-ex-girlfriend-the-cw-xULW8JVo4V7x9aqae4">via GIPHY</a></p>
+    <figcaption>Dancing my way to the kitchen for a victory snack.</caption>
+</figure>
 
-# Building a new Raspberry Pi Configuration Playbook
-- Might even be able to just use [this role](https://github.com/artis3n/ansible-role-tailscale) to install Tailscale for me (also in Installing Tailscale Client below)
-- Well... this is weird. I think I need to reboot my switch to factory settings, because I can see that my Raspberry Pis are connected to the network, but when I try to ssh/ping them, they are unreachable. will have to figure this out tomorrow.
-- After thinking about it last night (april 18th), I think I am going to install node_exporter on the cluster as is so I can immediately start getting metrics and set up a dashboard. Bringing in my notes on Grafana/prometheus:
-- This is a definite MUST for installation at some point, just unsure if this will be split into its own project (same as Kubernetes above)
-- [[Jeff Geerling]] has roles for [Prometheus node_exporter](https://galaxy.ansible.com/geerlingguy/node_exporter) and [nginx](https://galaxy.ansible.com/geerlingguy/nginx). I believe `node_exporter` is a requirement to use #tools/prometheus , and nginx was recommended somewhere for acting as the webserver for displaying #tools/grafana  dashboards.
-- I think the rest of this stuff will definitely be separate projects, so I will add them into separate projects/notes.
+## What's This? An Actual Artifact?
+Alright, alright, I can hear the judgement already. "But Alexander," you're whining, "if you made these changes to the container manually, they aren't going to persist and your test case is useless." Well, thank you for your very valid criticism. I also had the same thought after I finished my brief celebration.
 
-## Iffy: Setting up Firewall rules
-- I'm not exposing these to the Internet yet, so I don't know that I need to set that up yet.
-- If/when I do, I can always use the [firewall setup playbook](https://github.com/alesauce/expensify-remote-infrastructure-challenge/blob/main/expensify-infra-challenge/cluster-lockdown/bastion-host-configure.yaml) I created for the Expensify remote infra challenge
+Since I'm an amazing engineer, I had taken notes of all of the janky workarounds I implemented to make the test setup with the Molecule container work. With those notes, it was a simple ten minute task to create and build a new custom [Docker image](https://hub.docker.com/repository/docker/alesauce/debian-ansible-testing-frankenstein/general) for this task. I couldn't think of any more fitting name than [`frankenstein-container`](https://github.com/alesauce/debian-ansible-testing-frankenstein) because the Dockerfile definitely gives off the "cobbled together by a mad scientist" vibe.
 
-## Iffy: Installing Kubernetes
-- Could use `containerd` as container run time, [[Jeff Geerling]] has [a role](https://galaxy.ansible.com/geerlingguy/containerd) for that (of course).
-- Jeff Geerling has a [Kubernetes role](https://galaxy.ansible.com/geerlingguy/kubernetes) which I don't think I can/will use, but I think will be useful for inspiration for setting up [[k3s]]
-- Microk8s instead of k3s? idk
-- Set up Docker with [[Jeff Geerling]]'s [Docker ARM Playbook](https://galaxy.ansible.com/geerlingguy/docker_arm)
-- Install Pip with Jeff Geerling's [Pip role](https://galaxy.ansible.com/geerlingguy/pip)
-- 
-## Way out There: Redis
-- I've wanted to play around with Redis for a while, and my boy [[Jeff Geerling]] has an [Ansible role to install redis](https://galaxy.ansible.com/geerlingguy/redis). I'd likely just use redis in Docker, but who knows.
+Of course, since I'm such an amazing engineer I had to fuck up at least one more thing before I was done. Initially, the `CMD` in the Dockerfile was blank, so the container exited immediately after starting and I received the same `failed to create tmp directory` error as above. Thanks to all of the time spent correcting my own mistakes throughout the duration of this project, it was a simple matter to inspect the container and the logs and find the issue. After adding a new `CMD`, the role worked as expected on the ~~pile of shit~~ beautiful new Docker container. Wrapping up with a few `git push` commands and a `docker image push` left me staring at the computer screen and marveling at my own genius creating a solution to a problem solved years earlier by countless other people.
 
+<figure>
+    <iframe src="https://giphy.com/embed/3o7qDHGyWcfBPRy5lS" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/studiosoriginals-parker-jackson-ferris-bueller-3o7qDHGyWcfBPRy5lS">via GIPHY</a></p>
+    <figcaption>People staring at my GitHub profile like</caption>
+</figure>
 
-# Installing Tailscale Client
-- not at this step yet, but will follow the [Tailscale install instructions](https://tailscale.com/download/linux/ubuntu-2204) to create an Ansible playbook to install and configure Tailscale on a new client server.
-- i did something similar on my [expensify infra challenge](https://github.com/alesauce/expensify-remote-infrastructure-challenge/blob/main/expensify-infra-challenge/load-balancer/envoy-archive/install-envoy.yaml) with the initial attempts at configuring Envoy. Figure that will be useful
-- Might even be able to just use [this role](https://github.com/artis3n/ansible-role-tailscale) to do that for me :)
+My next steps from here are to make it truly cross-distro and use some more of the Ansible distro-agnostic commands instead of Debian-focused. I also have a few other playbooks from the same job interview for installing Nagios, HAProxy as a load balancer (along with a custom Nagios plugin for monitoring HAProxy), locking down a cluster with firewall rules, and creating a bastion host for securing SSH access to a cluster of servers. Since I couldn't find those roles on Ansible Galaxy when I was doing the job interview, I am going to assume that the world is crying out for them. As a man of the people, I must answer this need.
 
-# Provisioning Raspberry Pi Cluster
-- Last night, the Pis became unreachable for some reason from my desktop. I am still unsure why, given that I was attached to the network still.
-- I am going to try resetting the switch to factory settings to see if that will fix the issue.
-- Was able to trigger the reset via the web interface for the switch, under `System Tools -> System Reset`
-- From what I can see online, I think there *might* be issues if you try to use the same hostname for different hosts. So I'm going to start executing my new Ansible playbook one host at a time and see if that resolves any other connection issues.
-- Had a couple of dumbass errors, but I eventually got my inventory working properly and the playbook is now running with the following roles:
-	- provision_new_stock_linux_server
-	- tailscale
-	- node_exporter
-- Created one more basic playbook to delete the ubuntu user and reboot the Raspberry Pi so the hostname change could take effect. Let's see if it's still accessible via Tailscale admin panel.
-- I'm getting a `key exchange: connection reset by peer` when attempting to SSH normally. Wonder if the issue is Tailscale now takes over SSH connections?
-- So I think the issue was that I wasn't trying to use Tailscale IP address, which makes sense.
-- But now, I still can't SSH into the server and the SSH connection is hanging while attempting to receive the version string. Found [this Q and A](https://superuser.com/questions/1374076/what-does-it-mean-if-ssh-hangs-after-connection-established) which says that the issue is on the server side here.
-- This is similar to what happened last night, and when I look at the Xfinity router I only see one Raspberry Pi despite another one being connected. I think the switch might be the bottleneck here.
-- For mariposa1 at least, I tried restarting tailscale on my desktop with the `--ssh` flag (`tailscale up --ssh --force-reauth`) and will see if that does the trick.
-- Nope, still the same thing. The name is able to resolve to the proper Tailscale IP, but the connection hangs. I'm leaning back towards my switch being the bottleneck.
-- Using the `ping` command works on both the LAN and tailscale IP. I'm wondering why the SSH connection is hanging then, and why it's not showing on XFinity router page.
-- I think I might have to set up the OpnSense router to get the switch to work properly. apparently it doesn't route traffic at all??
-- I changed the ACL and now I am able to SSH into mariposa1 via the web browser, but still hanging when I try via regular terminal command.
-- Scratch that, looks like SSH client is also hanging while trying the browser-based SSH
-- I think the issue is on the server itself - tailscale network can talk, and I can `tailscale ping`, but nothing else is happening. Weird
-- Going to try from my macbook to see if the issue persists. At that point, might just be that my desktop/switch are the issues.
-- Ok, so it's also not working from my macbook. thinking the server might be hanging or something. high-key tempted to just start spending some money on linode or digital ocean credits and at least then I could test it with multiple machines.
+## Wrap-Up
+One thing that has frustrated me about online documentation is an implicit assumption of some knowledge of a tool, framework, or paradigm. It's not always the case, and it's a hard problem to solve. After all, a lot of documentation has been written by people who are intimately familiar with a tool and have likely forgotten more about it than the average user of said tool. That frustration was a source of inspiration for choosing to write this article and record the absolute beginner/idiotic mistakes I am prone to making. On that note, hopefully, this has been useful to at least someone and I'm not just shouting into the void.
 
-# [[2023-04-20]]
-- Ok, I was able to get back in to the server after unplugging it and plugging it back in. I'm going to try plugging another node in and see if the same issue happens - in that case, I'm still not sure what it could be, but at least I'd have more of a clue.
-- I plugged in a second node. This time, no traffic hangup on mariposa1 and I am still able to SSH into `mariposa1`. However, I am still unable to see the new node from the router page.
-- I think this might be a good time to start with my plan of setting up OPNSense to get a good subnet going for my stuff so I have a router.
-- Ok, I think the issue *may be* that the only Pi I've done the treatment to to boot from USB first is mariposa1... Or that the POE is insufficient to power the other ones and their SSDs. I might try to go through the ones I have and see if any of them boot correctly, but otherwise might just get that computer this weekend and call it good.
-- I'm going to call this project good for now. Will clean these notes up later tonight/tomorrow.
+Please feel free to contact me by any of the methods on this website's homepage if you have any questions, comments, or concerns. In the meantime, I will work on getting more articles written about my next experiments. Swearzies for realzies this time, I will write more often.
+
+<figure>
+    <iframe src="https://giphy.com/embed/Lcn0yF1RcLANG" width="480" height="361" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/food-ahead-upcoming-Lcn0yF1RcLANG">via GIPHY</a></p>
+    <figcaption>Realizing that hard work and persistence lead to good things.</caption>
+</figure>
