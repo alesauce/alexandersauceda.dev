@@ -15,7 +15,7 @@ dateFormat = "2 January 2006"
 [author]
   name = "Alexander Sauceda"
   image = "img/author.jpg"
-  headline = "Hobbyist with an affinity for rabbit holes."
+  headline = "Aspiring software engineer with a boundless curiosity."
   links = [
     { email = "mailto:alexander@alexandersauceda.dev" },
     { github = "https://github.com/alesauce" },
