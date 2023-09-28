@@ -11,3 +11,9 @@ Hello, and welcome to my first blog post! As I mentioned in my headline and bio,
 
 # Why does this matter?
 If there is one thing I've learned from the years I've spent in the tech field, it's that very few people know as much as you think they do. Everyone is constantly learning and figuring things out as they go.
+
+
+quote from about me that might fit in better here:
+```
+Working as an engineer has taught me two important things: 1) nobody knows everything, and 2) the only limit to "things left to learn" is someone's time and desire. I have had the privilege to work with some very smart, talented, and experienced engineers. Each and every one has at some point said, "I don't know". 
+```
