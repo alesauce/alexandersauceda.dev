@@ -32,6 +32,7 @@
             go_1_19 # Go 1.19
             gotools # Go tools like goimports, godoc, and others
             hugo # Static website generator
+            vale # Markdown linter
           ];
         };
       });
