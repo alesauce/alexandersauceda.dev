@@ -90,8 +90,8 @@ I am doing my best to get out of my own way on this. I recently read an article 
 
 I'm clearly far from unique with that approach. But reading the article made me realize how much I rely on that. As I have mentioned in [other articles](link to perfect as enemy), I have a longstanding problem of unreasonable expectations for myself. Figure out one problem, not the entire project.
 
-## User Journeys
-Summing up the above requirements and ideas for improvement, these are the user journeys I can see forming the core of this application:
+## User Flows
+Summing up the above requirements and ideas for improvement, these are the user flows I can see forming the core of this application:
 
 1. Creating a new character sheet from scratch
 1. Importing a character sheet from a JSON file
