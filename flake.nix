@@ -29,7 +29,7 @@
         default = pkgs.mkShell {
           # The Nix packages provided in the environment
           packages = with pkgs; [
-            go_1_19 # Go 1.19
+            go_1_21 # Go 1.19
             gotools # Go tools like goimports, godoc, and others
             hugo # Static website generator
             vale # Markdown linter
