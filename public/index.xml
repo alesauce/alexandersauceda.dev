@@ -2,19 +2,60 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Library of Alexandria</title>
-    <link>https://alexandersauceda.dev/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Library of Alexandria</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 24 Aug 2022 20:25:55 -0700</lastBuildDate><atom:link href="https://alexandersauceda.dev/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 14 Jun 2024 12:53:31 -0600</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Potatomath P0</title>
+      <link>http://localhost:1313/posts/potatomath-p0/</link>
+      <pubDate>Fri, 14 Jun 2024 12:53:31 -0600</pubDate>
+      <guid>http://localhost:1313/posts/potatomath-p0/</guid>
+      <description>Project Output #Before I say anything else, here is the link to the repo on GitHub Potatomath project repo.</description>
+    </item>
+    <item>
+      <title>Creating a New DnD Character Sheet Application</title>
+      <link>http://localhost:1313/posts/dnd-character-sheet-app-design-doc-v1/</link>
+      <pubDate>Fri, 20 Oct 2023 18:51:29 -0600</pubDate>
+      <guid>http://localhost:1313/posts/dnd-character-sheet-app-design-doc-v1/</guid>
+      <description>Problem Statement #It&amp;rsquo;s often very clunky and manually taxing to manage a Roll20 character sheet.</description>
+    </item>
+    <item>
+      <title>About Me</title>
+      <link>http://localhost:1313/about/</link>
+      <pubDate>Wed, 27 Sep 2023 19:46:40 -0700</pubDate>
+      <guid>http://localhost:1313/about/</guid>
+      <description>As you can probably tell from the home page, my name is Alexander.</description>
+    </item>
+    <item>
+      <title>An Idiot&#39;s Journey into Automation with Ansible</title>
+      <link>http://localhost:1313/posts/creating-ansible-homelab-roles/</link>
+      <pubDate>Mon, 24 Apr 2023 20:39:05 -0600</pubDate>
+      <guid>http://localhost:1313/posts/creating-ansible-homelab-roles/</guid>
+      <description>The &amp;ldquo;Joys&amp;rdquo; of Learning #I love the feeling of adding new skills and data points to my resume.</description>
+    </item>
+    <item>
+      <title>Keeping Perfect From Being the Enemy of Good Enough</title>
+      <link>http://localhost:1313/posts/perfect-as-enemy/</link>
+      <pubDate>Tue, 14 Mar 2023 21:46:59 -0600</pubDate>
+      <guid>http://localhost:1313/posts/perfect-as-enemy/</guid>
+      <description>Are We All a Little Masochistic?</description>
+    </item>
     <item>
       <title>My 2022 Annual Review</title>
-      <link>https://alexandersauceda.dev/posts/annual-review/</link>
+      <link>http://localhost:1313/posts/annual-review/</link>
       <pubDate>Sat, 21 Jan 2023 22:33:08 -0700</pubDate>
-      
-      <guid>https://alexandersauceda.dev/posts/annual-review/</guid>
-      <description>My 2022 Annual Review # In Remembrance # I remember thinking at the start of 2022 that my life was going to change.</description>
+      <guid>http://localhost:1313/posts/annual-review/</guid>
+      <description>My 2022 Annual Review #In Remembrance #I remember thinking at the start of 2022 that my life was going to change.</description>
     </item>
-    
+    <item>
+      <title>Engineers and Smart Notes</title>
+      <link>http://localhost:1313/posts/engineers-and-notes/</link>
+      <pubDate>Tue, 06 Sep 2022 19:43:01 -0700</pubDate>
+      <guid>http://localhost:1313/posts/engineers-and-notes/</guid>
+      <description>Overview #Hello, and welcome to my first blog post!</description>
+    </item>
   </channel>
 </rss>
