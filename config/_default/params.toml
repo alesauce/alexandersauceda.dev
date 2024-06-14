@@ -15,13 +15,16 @@ enableCodeCopy = false
 # mainSections = ["section1", "section2"]
 # robots = ""
 
+[author]
+  name = "Alexander Sauceda"
+
 [header]
   layout = "basic" # valid options: basic, hamburger, custom
 
 [footer]
   showCopyright = true
   showThemeAttribution = true
-  showAppearanceSwitcher = true 
+  showAppearanceSwitcher = true
   showScrollToTop = true
 
 [homepage]
@@ -30,7 +33,7 @@ enableCodeCopy = false
 
 [article]
   showDate = true
-  showDateUpdated = true 
+  showDateUpdated = true
   showAuthor = true
   showBreadcrumbs = false
   showDraftLabel = true
